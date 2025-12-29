@@ -1,3 +1,4 @@
+/* src/App.tsx */
 import { BrowserRouter as Router } from "react-router-dom";
 import { useEffect } from "react";
 import { useThemeStore } from "./store/themeStore";
@@ -10,14 +11,18 @@ function App() {
   const { isDarkMode } = useThemeStore();
 
   useEffect(() => {
+    // Esto activa el modo oscuro en Tailwind
     document.documentElement.classList.toggle("dark", isDarkMode);
   }, [isDarkMode]);
 
   return (
     <Router>
       <SmoothScroll>
-        <div className="relative min-h-screen bg-bakery-flour dark:bg-bakery-wood text-bakery-wood dark:text-bakery-flour transition-colors duration-500">
-          {/* AQUÍ ESTÁ LA TEXTURA GLOBAL */}
+        {/* LÓGICA DE INVERSIÓN:
+           - DÍA (Sin dark): Fondo Harina (#F9F7F2) | Texto Madera (#2D241E)
+           - NOCHE (Con dark): Fondo Madera (#2D241E) | Texto Harina (#F9F7F2)
+        */}
+        <div className="relative min-h-screen transition-colors duration-500 bg-bakery-flour text-bakery-wood dark:bg-bakery-wood dark:text-bakery-flour">
           <div className="bg-noise" />
 
           <Header />
